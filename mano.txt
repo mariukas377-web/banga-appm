@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Banga</title>
+</head>
+<body>
+  <h2>Programa veikia ✅</h2>
+  <p>Įvesk skaičių 0–36:</p>
+  <input id="n" type="number" min="0" max="36" />
+  <button onclick="add()">Pridėti</button>
+  <p id="out"></p>
+
+<script>
+  const s=[]; // sums
+  function sum(n){ return n==0?0:Math.floor(n/10)+(n%10); }
+  function add(){
+    const n=Number(document.getElementById('n').value);
+    if(!Number.isInteger(n)||n<0||n>36){ out.textContent="Įvesk 0–36"; return; }
+    s.push(sum(n));
+    const w=s.slice(-8);
+    const c={9:0,6:0,4:0};
+    w.forEach(x=>{ if(c[x]!=null) c[x]++; });
+    out.textContent =
+      "Pask. sumos: "+w.join(", ")+" | 9:"+c[9]+" 6:"+c[6]+" 4:"+c[4] +
+      (Math.max(c[9],c[6],c[4])>=2 ? " ✅ BANGA" : " ❌ NĖRA BANGOS");
+    document.getElementById('n').value="";
+  }
+</script>
+</body>
+</html>
