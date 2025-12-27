@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Bangų programa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<h2>Ruletės „bangų“ programa</h2>
+
+<p>Įvesk skaičių (0–36):</p>
+
+<input id="n" type="number" min="0" max="36">
+<button onclick="add()">Pridėti</button>
+
+<p id="out"></p>
+
+<script>
+let sums = [];
+
+function skaitmenuSuma(n){
+  if(n===0) return 0;
+  return Math.floor(n/10)+(n%10);
+}
+
+function add(){
+  let n = Number(document.getElementById("n").value);
+  if(!Number.isInteger(n) || n<0 || n>36){
+    out.textContent = "Įvesk skaičių nuo 0 iki 36";
+    return;
+  }
+
+  let s = skaitmenuSuma(n);
+  sums.push(s);
+
+  let last = sums.slice(-8);
+  let c9 = last.filter(x=>x===9).length;
+  let c6 = last.filter(x=>x===6).length;
+  let c4 = last.filter(x=>x===4).length;
+
+  let banga = (c9>=2 || c6>=2 || c4>=2);
+
+  out.textContent =
+    "Paskutinės sumos: " + last.join(", ") +
+    " | 9:"+c9+" 6:"+c6+" 4:"+c4 +
+    (banga ? "  ✅ BANGA" : "  ❌ NĖRA BANGOS");
+
+  document.getElementById("n").value="";
+}
+</script>
+
+</body>
+</html>
